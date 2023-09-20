@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import '../Model/task.dart';
+import '../model/todo.dart';
 import '../constants/colors.dart';
-import '../widgets/task_item.dart';
-import 'add_task_page.dart';
+import '../widgets/todo_item.dart';
+import 'add_task_screen.dart'; // Importe a tela de adição de tarefas
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  final todosList = Task.todoList();
-  List<Task> _foundToDo = [];
+  final todosList = ToDo.todoList();
+  List<ToDo> _foundToDo = [];
   final _todoController = TextEditingController();
-  int _currentIndex = 0;
+  int _currentIndex = 0; // Adicione um índice para rastrear a tela selecionada
 
   @override
   void initState() {
@@ -27,7 +27,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: _buildBody(),
+      body:
+          _buildBody(), // Use um método separado para construir o corpo da tela
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -41,7 +42,8 @@ class _HomeState extends State<Home> {
             label: 'Tarefas',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
+            icon: Icon(
+                Icons.calendar_month), // Altere o ícone para um botão entalhado
             label: 'Calendario',
           ),
         ],
@@ -51,7 +53,7 @@ class _HomeState extends State<Home> {
               onPressed: () async {
                 final newTask = await Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddTaskPage()),
+                  MaterialPageRoute(builder: (context) => AddTaskScreen()),
                 );
 
                 if (newTask != null) {
@@ -61,13 +63,14 @@ class _HomeState extends State<Home> {
               child: Icon(Icons.add),
               elevation: 10,
             )
-          : null,
+          : null, // Remova o botão flutuante da tela de tarefas
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
   Widget _buildBody() {
     if (_currentIndex == 0) {
+      // Conteúdo da lista de tarefas
       return Stack(
         children: [
           Container(
@@ -94,9 +97,9 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                      for (Task tarefa in _foundToDo.reversed)
-                        TaskItem(
-                          todo: tarefa,
+                      for (ToDo todoo in _foundToDo.reversed)
+                        ToDoItem(
+                          todo: todoo,
                           onToDoChanged: _handleToDoChange,
                           onDeleteItem: _deleteToDoItem,
                         ),
@@ -109,11 +112,11 @@ class _HomeState extends State<Home> {
         ],
       );
     } else {
-      return Container();
+      return Container(); // Caso contrário, retorne um container vazio
     }
   }
 
-  void _handleToDoChange(Task todo) {
+  void _handleToDoChange(ToDo todo) {
     setState(() {
       todo.isDone = !todo.isDone;
     });
@@ -127,21 +130,21 @@ class _HomeState extends State<Home> {
 
   void _addToDoItem(String toDo) {
     setState(() {
-      todosList.add(Task(
+      todosList.add(ToDo(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
-        taskTitle: toDo,
+        todoText: toDo,
       ));
     });
     _todoController.clear();
   }
 
   void _runFilter(String enteredKeyword) {
-    List<Task> results = [];
+    List<ToDo> results = [];
     if (enteredKeyword.isEmpty) {
       results = todosList;
     } else {
       results = todosList
-          .where((item) => item.taskTitle!
+          .where((item) => item.todoText!
               .toLowerCase()
               .contains(enteredKeyword.toLowerCase()))
           .toList();

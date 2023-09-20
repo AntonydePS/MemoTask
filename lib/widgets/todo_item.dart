@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import '../Model/task.dart';
+import 'package:intl/intl.dart'; // Importe a classe DateFormat
+
+import '../model/todo.dart';
 import '../constants/colors.dart';
 
-class TaskItem extends StatelessWidget {
-  final Task todo;
+class ToDoItem extends StatelessWidget {
+  final ToDo todo;
   final onToDoChanged;
   final onDeleteItem;
 
-  const TaskItem({
+  const ToDoItem({
     Key? key,
     required this.todo,
     required this.onToDoChanged,
@@ -36,7 +37,7 @@ class TaskItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              todo.taskTitle!,
+              todo.todoText!,
               style: TextStyle(
                 fontSize: 16,
                 color: tdBlack,

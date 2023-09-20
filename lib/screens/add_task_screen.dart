@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AddTaskPage extends StatefulWidget {
+class AddTaskScreen extends StatefulWidget {
   @override
-  _AddTaskPageState createState() => _AddTaskPageState();
+  _AddTaskScreenState createState() => _AddTaskScreenState();
 }
 
-class _AddTaskPageState extends State<AddTaskPage> {
+class _AddTaskScreenState extends State<AddTaskScreen> {
   final _taskController = TextEditingController();
 
   //DateTime? _selectedDate; // Estado da data selecionada

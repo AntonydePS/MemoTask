@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../View/home_page.dart'; // Importe a classe Home do arquivo home_page.dart
-import '../ViewModel/login_view_model.dart';
+
+import '../ViewModel/LoginViewModel.dart';
 
 class LoginPage extends StatelessWidget {
   final LoginViewModel viewModel = LoginViewModel();
@@ -12,7 +12,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Página de Login'),
+        title: const Text('Memo Task'),
       ),
       body: Container(
         color: const Color.fromARGB(255, 255, 255, 255),
@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
               children: <Widget>[
                 TextFormField(
                   controller: _usernameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Usuário',
                   ),
                   validator: viewModel.validateUsername,
@@ -34,7 +34,7 @@ class LoginPage extends StatelessWidget {
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Senha',
                   ),
                   validator: viewModel.validatePassword,
@@ -48,15 +48,11 @@ class LoginPage extends StatelessWidget {
                       final loginSuccessful =
                           await viewModel.login(username, password);
                       if (loginSuccessful) {
-                        // Navegue para a tela Home do arquivo home_page.dart
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Home()),
-                        );
+                        Navigator.pushReplacementNamed(context, '/home');
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Usuário ou senha incorretos'),
+                          const SnackBar(
+                            content: Text('Usuario ou senha incorreta'),
                           ),
                         );
                       }
@@ -66,7 +62,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    // Lógica de recuperação de senha
+                    // falta a implementação da esquceu a senha
                   },
                   child: const Text('Esqueceu a senha?'),
                 ),

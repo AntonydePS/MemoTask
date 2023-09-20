@@ -1,23 +1,24 @@
 class LoginViewModel {
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Insira seu nome de usuario';
+      return 'Por favor informe o seu usuario';
     }
     return null;
   }
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Insira sua senha';
+      return 'Por favor informe sua senha';
     } else if (value.length < 8) {
-      return 'A senha deve ter pelo menos 8 characteres';
+      return 'A senha deve possuir ao menos 8 caracteres ';
     }
     return null;
   }
 
   Future<bool> login(String username, String password) async {
-    // Resto da logica de login
-    // Retorne true se o login for um sucesso, ou retorne false.
+    // futura logica de login
+    // Por exemplo requisições ou operaçãoes async
+    // Se o login tiver sucesso ele retornara true ou ira retorna falso.
     return username == 'testuser' && password == 'testpassword';
   }
 }
